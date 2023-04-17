@@ -16,7 +16,7 @@ namespace CrmApplication.DAL
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("server=DESKTOP-M8JLN9L\\SQLEXPRESS;database=AcunMedyaCrm");
+                optionsBuilder.UseSqlServer("server=DESKTOP-M8JLN9L\\SQLEXPRESS;database=AcunMedyaCrm;trusted_connection=true;");
             }
         }
     }
