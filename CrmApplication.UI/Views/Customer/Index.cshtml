@@ -1,66 +1,188 @@
 ﻿@model IEnumerable<CrmApplication.Entites.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Müşteri Listesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Müşteri Listesi</h1>
+                </div>
+                
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Müşteri Listes</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#modalcustomercreate">Yeni Müşteri Oluştur</a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TaxAdmin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TaxNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaxAdmin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaxNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Müşteri No</th>
+                                            <th>Firma Adı</th>
+                                            <th>EMail</th>
+                                            <th>Telefon</th>
+                                            <th>Veri Dairesi</th>
+                                            <th>Veri No</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Id</td>
+                                                <td>@item.CompanyName</td>
+                                                <td>@item.Email</td>
+                                                <td>@item.Phone</td>
+                                                <td>@item.TaxAdmin</td>
+                                                <td>@item.TaxNumber</td>
+                                                <td>
+                                                    <a onclick="openCustomerDeleteModal(@item.Id)" class="btn btn-danger btn-sm" title="Kaydı Sil"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                                    <td>
+                                                    <a onclick="openCustomerEditModal(@item.Id)" class="btn btn-warning btn-sm" title="Kaydı Güncelle"><i class="fa fa-edit"></i></a>
+                                                    </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                Footer
+            </div>
+        </div>
+    </section>
+</div>
+
+@*CUSTOMER CREAT İŞLEMİ İÇİN MODAL*@
+
+<div class="modal fade" id="modalcustomercreate">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Müşteri Oluştur</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("_CustomerCreatePartialView", new Customer())
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="formCustomerCreate">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*CUSTOMER EDİT İŞLEMİ İÇİN MODAL*@
+
+<div class="modal fade" id="modalCustomerEdit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Müşteri Güncelle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="divEditCustomerModal">
+
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="formCustomerEdit">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*CUSTOMER DELETE İŞLEMİ İÇİN MODAL*@
+
+<div class="modal fade" id="modalCustomerDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Müşteri Sil</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="divDeleteCustomerModal">
+
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger" form="formCustomerDelete">Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*CUSTOMER İŞLEMİ İÇİN JS*@
+@section Scripts{
+    <script>
+        function openCustomerEditModal(id){
+            $("#divEditCustomerModal").load("Customer/EditCustomerPartial/" + id);
+            $("#modalCustomerEdit").modal("toggle");
+        }
+
+        function openCustomerDeleteModal(id) {
+            $("#divDeleteCustomerModal").load("Customer/DeleteCustomerPartial/" + id);
+            $("#modalCustomerDelete").modal("toggle");
+        }
+    </script>
 }
-    </tbody>
-</table>
+
