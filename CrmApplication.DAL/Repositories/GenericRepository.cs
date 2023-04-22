@@ -27,14 +27,14 @@ namespace CrmApplication.DAL.Repositories
             context.SaveChanges();
         }
 
-        public TEntity GetCustomer(int id)
-        {
-            return context.Set<TEntity>().Find(id)!;
-        }
-
         public List<TEntity> ListAll()
         {
             return context.Set<TEntity>().ToList();
+        }
+
+        public TEntity Get(int id)
+        {
+            return context.Set<TEntity>().Find(id)!;
         }
     }
 }

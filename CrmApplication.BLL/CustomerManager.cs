@@ -35,7 +35,7 @@ namespace CrmApplication.BLL
 
         public Customer Get(int id)
         {
-            return _customerDal.GetCustomer(id);
+            return _customerDal.Get(id);
         }
 
         public List<Customer> ListAll()
