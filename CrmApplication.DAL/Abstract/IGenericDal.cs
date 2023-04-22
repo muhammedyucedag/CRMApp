@@ -13,6 +13,6 @@ namespace CrmApplication.DAL.Abstract
         void Create(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
-        TEntity GetCustomer(int id);
+        TEntity Get(int id);
     }
 }

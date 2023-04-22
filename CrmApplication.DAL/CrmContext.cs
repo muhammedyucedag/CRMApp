@@ -11,6 +11,7 @@ namespace CrmApplication.DAL
     public class CrmContext : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
