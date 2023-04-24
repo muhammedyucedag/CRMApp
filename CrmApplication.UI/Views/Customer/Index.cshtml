@@ -16,7 +16,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Müşteri Listes</li>
+                        <li class="breadcrumb-item active">Müşteri Listesi</li>
                     </ol>
                 </div>
             </div>
@@ -25,7 +25,7 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-primary" data-toggle="modal" data-target="#modalcustomercreate">Yeni Müşteri Oluştur</a>
+                <a class="btn btn-primary btn-sm" onclick="openCreateModal('Customer')">Yeni Müşteri Oluştur</a>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -78,10 +78,10 @@
                                                 <td>@item.TaxAdmin</td>
                                                 <td>@item.TaxNumber</td>
                                                 <td>
-                                                    <a onclick="openCustomerDeleteModal(@item.Id)" class="btn btn-danger btn-sm" title="Kaydı Sil"><i class="fa fa-trash"></i></a>
+                                                    <a onclick="openDeleteModal('Customer', @item.Id)" class="btn btn-danger btn-sm" title="Kaydı Sil"><i class="fa fa-trash"></i></a>
                                                 </td>
                                                     <td>
-                                                    <a onclick="openCustomerEditModal(@item.Id)" class="btn btn-warning btn-sm" title="Kaydı Güncelle"><i class="fa fa-edit"></i></a>
+                                                    <a onclick="openEditModal('Customer', @item.Id)" class="btn btn-warning btn-sm" title="Kaydı Güncelle"><i class="fa fa-edit"></i></a>
                                                     </td>
                                             </tr>
                                         }
@@ -101,87 +101,14 @@
 </div>
 
 @*CUSTOMER CREAT İŞLEMİ İÇİN MODAL*@
+<vc:modal modal-id="modalCustomerCreate" header-text="Müşteri Oluştur" form-id="formCustomerCreate" button-class="primary" button-text="Kaydet" detail-div-id="divCreateModalDetail"></vc:modal>
 
-<div class="modal fade" id="modalcustomercreate">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Müşteri Oluştur</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @Html.Partial("_CustomerCreatePartialView", new Customer())
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="formCustomerCreate">Kaydet</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 @*CUSTOMER EDİT İŞLEMİ İÇİN MODAL*@
+<vc:modal modal-id="modalCustomerEdit" header-text="Müşteri Güncelle" form-id="formCustomerEdit" button-class="primary" button-text="Kaydet" detail-div-id="divEditModalDetail"></vc:modal>
 
-<div class="modal fade" id="modalCustomerEdit">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Müşteri Güncelle</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="divEditCustomerModal">
-
-                </div>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="formCustomerEdit">Kaydet</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 @*CUSTOMER DELETE İŞLEMİ İÇİN MODAL*@
+<vc:modal modal-id="modalCustomerDelete" header-text="Müşteri Sil" form-id="formCustomerDelete" button-class="danger" button-text="Sil" detail-div-id="divDeleteModalDetail"></vc:modal>
 
-<div class="modal fade" id="modalCustomerDelete">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Müşteri Sil</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="divDeleteCustomerModal">
-
-                </div>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-danger" form="formCustomerDelete">Sil</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@*CUSTOMER İŞLEMİ İÇİN JS*@
-@section Scripts{
-    <script>
-        function openCustomerEditModal(id){
-            $("#divEditCustomerModal").load("Customer/EditCustomerPartial/" + id);
-            $("#modalCustomerEdit").modal("toggle");
-        }
-
-        function openCustomerDeleteModal(id) {
-            $("#divDeleteCustomerModal").load("Customer/DeleteCustomerPartial/" + id);
-            $("#modalCustomerDelete").modal("toggle");
-        }
-    </script>
-}
 
