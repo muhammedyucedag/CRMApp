@@ -19,6 +19,11 @@ namespace CrmApplication.UI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult CreateSupplierPartial()
+        {
+            return PartialView("_SupplierCreatePartialView", new Supplier());
+        }
+
         public IActionResult EditSupplierPartial(int id)
         {
             Supplier supplier = supplierManager.Get(id);

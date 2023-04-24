@@ -21,6 +21,11 @@ namespace CrmApplication.UI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult CreateCustomerPartial()
+        {
+            return PartialView("_CustomerCreatePartialView",new Customer());
+        }
+
         public IActionResult EditCustomerPartial(int id)
         {
             Customer customer = customerManager.Get(id);
