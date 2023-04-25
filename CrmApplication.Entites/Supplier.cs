@@ -13,14 +13,21 @@ namespace CrmApplication.Entites
     [Table("Suppliers")]
     public class Supplier : EntityBase
     {
-        [Required]
+        [Required(ErrorMessage = "Firma Adı boş geçilemez.")]
         [DisplayName("Firma Adı")]
         public string CompanyName { get; set; }
-        public string? Email { get; set; }
+
+        [Required(ErrorMessage = "Email alanını boş geçemezsiniz.")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Email adresini hatalı girdiniz.")]
+        public string Email { get; set; }
+
         [DisplayName("Telefon")]
+        [MaxLength(11, ErrorMessage = "Telefon alanı maksimum 11 karakter olmalıdır. Örn: 05004003020")]
         public string? Phone { get; set; }
+
         [DisplayName("Vergi Dairesi")]
         public string? TaxAdmin { get; set; }
+
         [DisplayName("Vergi Numarası")]
         public string? TaxNumber { get; set; }
     }
