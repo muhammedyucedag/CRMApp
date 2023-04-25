@@ -1,39 +1,39 @@
-﻿@model CrmApplication.Entites.Customer
+﻿@model CrmApplication.Entites.Product
 
-<form asp-action="Delete" id="formCustomerDelete">
+<form asp-action="Delete" id="formProductDelete">
     <input type="hidden"  asp-for="Id"/>
-    <input type="hidden" asp-for="CompanyName" />
+    <input type="hidden"  asp-for="Name"/>
     <div>
         <dl class="row">
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.CompanyName)
+                @Html.DisplayNameFor(model => model.Name)
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.CompanyName)
+                @Html.DisplayFor(model => model.Name)
             </dd>
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.UnitPrice)
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Email)
+                @Html.DisplayFor(model => model.UnitPrice)
             </dd>
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Phone)
+                @Html.DisplayNameFor(model => model.StockAmount)
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Phone)
+                @Html.DisplayFor(model => model.StockAmount)
             </dd>
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.TaxAdmin)
+                @Html.DisplayNameFor(model => model.VatRate)
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.TaxAdmin)
+                @Html.DisplayFor(model => model.VatRate)
             </dd>
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.TaxNumber)
+                @Html.DisplayNameFor(model => model.Image)
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.TaxNumber)
+                @Html.DisplayFor(model => model.Image)
             </dd>
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Id)
