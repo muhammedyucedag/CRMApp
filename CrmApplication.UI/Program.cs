@@ -1,3 +1,5 @@
+using CrmApplication.UI.Services;
+
 namespace CrmApplication.UI
 {
     public class Program
@@ -8,6 +10,8 @@ namespace CrmApplication.UI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<INotificationService, NotificationService>(); // new yapmadan doðrudan ctor ile içindeki verilere eriþebiliriz
 
             var app = builder.Build();
 
@@ -21,6 +25,7 @@ namespace CrmApplication.UI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
 
             app.UseRouting();
 

@@ -1,13 +1,21 @@
 ﻿using CrmApplication.BLL;
 using CrmApplication.DAL.EntitiyFramework;
 using CrmApplication.Entites;
+using CrmApplication.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CrmApplication.UI.Controllers
 {
     public class SupplierController : Controller
     {
-        SupplierManager supplierManager = new SupplierManager( new EfSupplierRepository());
+        private readonly INotificationService _notificationService;
+
+        public SupplierController(INotificationService notificationService)
+        {
+            _notificationService = notificationService;
+        }
+
+        SupplierManager supplierManager = new SupplierManager(new EfSupplierRepository());
         public IActionResult Index()
         {
             List<Supplier> suppliers = supplierManager.ListAll();
@@ -15,7 +23,23 @@ namespace CrmApplication.UI.Controllers
         }
         public IActionResult Create(Supplier supplier)
         {
-            supplierManager.Create(supplier);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    supplierManager.Create(supplier);
+                    _notificationService.Notification(NotifyType.Success, $" {supplier.CompanyName} isimli tedarikçi başarılı bir şekilde kayıt edildi.");
+                }
+                catch (Exception ex)
+                {
+
+                    _notificationService.Notification(NotifyType.Error, ex.Message);
+                }
+            }
+            else
+
+                ModelStateController.CheckIt(_notificationService, ModelState);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -33,7 +57,22 @@ namespace CrmApplication.UI.Controllers
         [HttpPost]
         public IActionResult Edit(Supplier supplier)
         {
-            supplierManager.Update(supplier);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    supplierManager.Update(supplier);
+                    _notificationService.Notification(NotifyType.Success, $" {supplier.CompanyName} isimli tedarikçi başarılı bir şekilde güncellendi.");
+                }
+                catch (Exception ex)
+                {
+
+                    _notificationService.Notification(NotifyType.Error, ex.Message);
+                }
+            }
+            else
+                ModelStateController.CheckIt(_notificationService, ModelState);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -46,7 +85,16 @@ namespace CrmApplication.UI.Controllers
         [HttpPost]
         public IActionResult Delete(Supplier supplier)
         {
-            supplierManager.Delete(supplier);
+            // model dolu gelecek
+            try
+            {
+                supplierManager.Delete(supplier);
+                _notificationService.Notification(NotifyType.Success, $" {supplier.CompanyName} isimli tedarikçi başarılı bir şekilde silindi.");
+            }
+            catch (Exception ex)
+            {
+                _notificationService.Notification(NotifyType.Error, ex.Message);
+            }
             return RedirectToAction(nameof(Index));
         }
 
