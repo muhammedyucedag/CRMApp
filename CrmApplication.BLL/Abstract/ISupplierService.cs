@@ -9,5 +9,6 @@ namespace CrmApplication.BLL.Abstract
         void Delete(Supplier supplier);
         Supplier Get(int id);
         List<Supplier> ListAll();
+
     }
 }
