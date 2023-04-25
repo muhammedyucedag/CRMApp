@@ -25,8 +25,8 @@ namespace CrmApplication.Entites
         [DisplayName("KDV Oranı")]
         public int VatRate { get; set; }
 
-        [DisplayName("Fotoğraf")]
-        public string? Image { get; set; }
+        [DisplayName("Ürün Resmi")]
+        public string? ImageUrl { get; set; }
 
         [Required(ErrorMessage = "Stok miktarı alanını boş geçemezsiniz.")]
         [DisplayName("Stok Miktarı")]
