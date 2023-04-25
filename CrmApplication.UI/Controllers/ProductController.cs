@@ -11,10 +11,12 @@ namespace CrmApplication.UI.Controllers
         // toplu şekilde metotları kapatmak için CTRL+M,O
         ProductManager productManager = new ProductManager(new EfProductRepository());
         private readonly INotificationService _notificationService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(INotificationService notificationService)
+        public ProductController(INotificationService notificationService, IWebHostEnvironment webHostEnvironment)
         {
             _notificationService = notificationService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -24,12 +26,31 @@ namespace CrmApplication.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(Product product, IFormFile file)
         {
+            product.ImageUrl = "";
             if (ModelState.IsValid)
             {
                 try
                 {
+                    if (file != null)
+                    {
+                        // resim upload işlemi
+                        string wwwrootPath = _webHostEnvironment.WebRootPath;
+                        string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                        string extension = Path.GetExtension(file.FileName);
+
+                        string newFileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwrootPath + "/images/product/", newFileName);
+
+                        using (var fileStram = new FileStream(path, FileMode.Create))
+                        {
+                            file.CopyTo(fileStram);
+                        }
+
+                        product.ImageUrl = newFileName;
+
+                    }
                     productManager.Create(product);
                     _notificationService.Notification(NotifyType.Success, $" {product.Name} isimli ürünü başarılı bir şekilde kayıt edildi.");
                 }
@@ -58,12 +79,31 @@ namespace CrmApplication.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public IActionResult Edit(Product product, IFormFile? file)
         {
+         
             if (ModelState.IsValid)
             {
                 try
                 {
+                    if (file != null)
+                    {
+                        // resim upload işlemi
+                        string wwwrootPath = _webHostEnvironment.WebRootPath;
+                        string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                        string extension = Path.GetExtension(file.FileName);
+
+                        string newFileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                        string path = Path.Combine(wwwrootPath + "/images/product/", newFileName);
+
+                        using (var fileStram = new FileStream(path, FileMode.Create))
+                        {
+                            file.CopyTo(fileStram);
+                        }
+
+                        product.ImageUrl = newFileName;
+
+                    }
                     productManager.Update(product);
                     _notificationService.Notification(NotifyType.Success, $" {product.Name} isimli ürünü başarılı bir şekilde güncellendi.");
                 }

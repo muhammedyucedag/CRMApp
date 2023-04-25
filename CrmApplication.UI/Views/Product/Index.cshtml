@@ -58,6 +58,7 @@
                                 <table class="table table-hover text-nowrap">
                                     <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Ürün No</th>
                                             <th>Ürün Adı</th>
                                             <th>Birim Fiyatı</th>
@@ -71,12 +72,18 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
+                                                <td>
+                                                    <div class="user-block" style="width:35px !important; height:35px !important">
+                                                        <img class="img-circle img-bordered-sm" src="~/images/product/@item.ImageUrl" alt="User Image" style="width:35px !important; height:35px !important">
+
+                                                    </div>
+                                                </td>
                                                 <td>@item.Id</td>
                                                 <td>@item.Name</td>
                                                 <td>@item.UnitPrice</td>
                                                 <td>@item.StockAmount</td>
                                                 <td>@item.VatRate</td>
-                                                <td>@item.Image</td>
+                                                <td>@item.ImageUrl</td>
                                                 <td>
                                                     <a onclick="openDeleteModal('Product', @item.Id)" class="btn btn-danger btn-sm" title="Kaydı Sil"><i class="fa fa-trash"></i></a>
                                                 </td>
