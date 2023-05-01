@@ -57,7 +57,7 @@ namespace CrmApplication.UI.Controllers
             Customer customer = customerManager.Get(id);
             return PartialView("_CustomerEditPartialView", customer);
         }
-
+        
         [HttpPost]
         public IActionResult Edit(Customer customer)
         {
