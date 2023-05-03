@@ -2,12 +2,14 @@
 using CrmApplication.DAL.EntitiyFramework;
 using CrmApplication.Entites;
 using CrmApplication.UI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CrmApplication.UI.Controllers
 {
+    [Authorize]
     public class BlogController : Controller
     {
         PostManager postManager = new PostManager(new EfPostRepository());
@@ -25,6 +27,7 @@ namespace CrmApplication.UI.Controllers
         {
             return View();
         }
+
 
         [HttpPost]
         public IActionResult Create(Blog post, IFormFile file)

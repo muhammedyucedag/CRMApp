@@ -1,4 +1,5 @@
 using CrmApplication.UI.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CrmApplication.UI
 {
@@ -9,9 +10,20 @@ namespace CrmApplication.UI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<INotificationService, NotificationService>(); // new yapmadan doðrudan ctor ile içindeki verilere eriþebiliriz
+            builder.Services.AddScoped<INotificationService, NotificationService>();
+
+            builder.Services
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(opts =>
+                {
+                    opts.Cookie.Name = "crm.auth";
+                    opts.AccessDeniedPath = "/Home/Index";
+                    opts.LoginPath = "/Auth/Login";
+                    opts.LogoutPath = "/Auth/Logout";
+                });
+
 
             var app = builder.Build();
 
@@ -25,7 +37,6 @@ namespace CrmApplication.UI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
 
             app.UseRouting();
 
