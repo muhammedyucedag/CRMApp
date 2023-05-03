@@ -2,10 +2,12 @@
 using CrmApplication.DAL.EntitiyFramework;
 using CrmApplication.Entites;
 using CrmApplication.UI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CrmApplication.UI.Controllers
 {
+    [Authorize]
     public class SupplierController : Controller
     {
         private readonly INotificationService _notificationService;
